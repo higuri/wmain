@@ -1,4 +1,4 @@
-# GNU makefile for C
+# GNU makefile for wmain
 
 CC = gcc
 CFLAGS = -Werror -Wall
@@ -18,10 +18,10 @@ $(TARGET): $(OBJS) main.o
 
 ###
 
-clean:
-	$(RM) *.o
-	$(RM) $(TARGET)
-
 SAMPLE = Hello Olá 您好 こんにちは привет "Hello World"
 run: $(TARGET)
 	./$(TARGET) $(SAMPLE)
+
+clean:
+	$(RM) *.o
+	$(RM) $(TARGET)
