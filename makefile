@@ -20,7 +20,7 @@ $(TARGET): $(OBJS) main.o
 
 SAMPLE = Hello Olá 您好 こんにちは привет "Hello World"
 run: $(TARGET)
-	./$(TARGET) $(SAMPLE)
+	LC_CTYPE=en_US.UTF-8 ./$(TARGET) $(SAMPLE)
 
 clean:
 	$(RM) *.o
