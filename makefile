@@ -15,6 +15,13 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
+run: $(TARGET)
+	./$(TARGET)
+
+clean:
+	$(RM) *.o
+	$(RM) $(TARGET)
+
 ###
 
 # SAMPLE_TEXT
@@ -29,7 +36,3 @@ LC_UTF8 = en_US.UTF-8
 
 run_test: $(TARGET)
 	./$(TARGET) -L $(LC_UTF8) $(SAMPLE_TEXT)
-
-clean:
-	$(RM) *.o
-	$(RM) $(TARGET)
