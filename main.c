@@ -6,7 +6,7 @@
 #include <wchar.h>
 #include <locale.h>
 
-// array_remove()
+// array_remove:
 static int array_remove(void** buf, int i, int c) {
     for (int j = i; j < c; j++) {
         if (j+1 < c) {
@@ -16,7 +16,7 @@ static int array_remove(void** buf, int i, int c) {
     return (c-1);
 }
 
-// free_wargs()
+// free_wargs:
 static void free_wargs(
     int wargc, wchar_t** wargs) {
     for (int i = 0; i < wargc; i++) {
@@ -29,7 +29,7 @@ static void free_wargs(
     return;
 }
 
-// alloc_wargs()
+// alloc_wargs:
 static wchar_t** alloc_wargs(
     int argc, char* args[]) {
     wchar_t** wargs =
@@ -53,7 +53,12 @@ static wchar_t** alloc_wargs(
     return wargs;
 }
 
-// alloc_wargs_with_locale()
+// alloc_wargs_with_locale:
+//   localeID:
+//     Specify a locale ID which is used to encode args.
+//     You can specify "" (empty string) for a localeID
+//     if args are encoded with system locale,
+//     such as when args are command line arguments.
 static wchar_t** alloc_wargs_with_locale(
     int argc, char* args[], char* localeID) {
     char* old_locale = (char*)strdup(setlocale(LC_ALL, NULL));
@@ -64,7 +69,7 @@ static wchar_t** alloc_wargs_with_locale(
     if (setlocale(LC_ALL, localeID) == NULL) {
         wprintf(L"Error: Invalid locale ID for this environment.\n");
         wprintf(L"| Can't set %hs to LC_ALL.\n", localeID);
-        wprintf(L"| Check `locale -a` whether specified locale ID is available in this environment.\n");
+        wprintf(L"| Check `locale -a` whether the specified locale ID is available in this environment.\n");
         return NULL;
     }
     wchar_t** wargs = alloc_wargs(argc, args);
@@ -73,7 +78,10 @@ static wchar_t** alloc_wargs_with_locale(
     return wargs;
 }
 
-// main()
+// main:
+//   Actual entry point.
+//   First, convert args[] from char* to wchar_t*.
+//   And call wmain() with it.
 extern int wmain(int, wchar_t**);
 int main(int argc, char* args[]) {
     // Check locale option (-L).
@@ -106,14 +114,4 @@ int main(int argc, char* args[]) {
     int retval = wmain(argc, wargs);
     free_wargs(argc, wargs);
     return retval;
-}
-
-//
-// wmain()
-//
-int wmain(int argc, wchar_t* args[]) {
-    for (int i = 0; i < argc; i++) {
-      wprintf(L"Length[%d]: %d\n", i, wcslen(args[i]));
-    }
-    return 0;
 }

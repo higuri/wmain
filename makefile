@@ -4,12 +4,12 @@ CC = gcc
 CFLAGS = -std=gnu99 -Werror -Wall
 #CFLAGS = -std=gnu99 -Werror -Wall -Wextra
 
-TARGET = main.out
-OBJS=
+TARGET = wmain.out
+OBJS = main.o wmain.o
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS) main.o
+$(TARGET): $(OBJS)
 	$(CC) -o $@ $^
 
 %.o: %.c
@@ -17,15 +17,18 @@ $(TARGET): $(OBJS) main.o
 
 ###
 
-SAMPLE = Hello Olá 您好 こんにちは привет "Hello World"
+# SAMPLE_TEXT
+SAMPLE_TEXT = Hello Olá 您好 こんにちは привет "Hello World"
+
 # LC_UTF8 
-#   Specify locale ID that can handle utf-8.
-#   This file is encoded with utf-8,
-#   so $(SAMPLE) is passed in the form of it.
+#   Specify a valid locale ID that can handle utf-8.
+#   Because this file is encoded with utf-8,
+#   $(SAMPLE_TEXT) is passed in the form of utf-8.
 LC_UTF8 = en_US.UTF-8
 #LC_UTF8 = C.UTF-8
+
 run_test: $(TARGET)
-	./$(TARGET) -L $(LC_UTF8) $(SAMPLE)
+	./$(TARGET) -L $(LC_UTF8) $(SAMPLE_TEXT)
 
 clean:
 	$(RM) *.o
