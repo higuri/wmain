@@ -61,7 +61,7 @@ static wchar_t** alloc_wargs(
 //     such as when args are command line arguments.
 static wchar_t** alloc_wargs_with_locale(
     int argc, char* args[], char* localeID) {
-    char* old_locale = (char*)strdup(setlocale(LC_ALL, NULL));
+    char* old_locale = setlocale(LC_ALL, NULL);
     if (old_locale == NULL) {
         wprintf(L"Error: Getting current locale failed.");
         return NULL;
@@ -74,7 +74,6 @@ static wchar_t** alloc_wargs_with_locale(
     }
     wchar_t** wargs = alloc_wargs(argc, args);
     setlocale(LC_ALL, old_locale);
-    free(old_locale);
     return wargs;
 }
 

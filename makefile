@@ -1,8 +1,7 @@
 # GNU makefile for wmain
 
 CC = gcc
-CFLAGS = -std=gnu99 -Werror -Wall
-#CFLAGS = -std=gnu99 -Werror -Wall -Wextra
+CFLAGS = -std=c99 -Werror -Wall
 
 TARGET = wmain.out
 OBJS = main.o wmain.o
@@ -31,8 +30,8 @@ SAMPLE_TEXT = Hello Olá 您好 こんにちは привет "Hello World"
 #   Specify a valid locale ID that can handle utf-8.
 #   Because this file is encoded with utf-8,
 #   $(SAMPLE_TEXT) is passed in the form of utf-8.
-LC_UTF8 = en_US.UTF-8
-#LC_UTF8 = C.UTF-8
+LC_UTF8 = C.UTF-8
+#LC_UTF8 = en_US.UTF-8
 
 run_test: $(TARGET)
 	./$(TARGET) -L $(LC_UTF8) $(SAMPLE_TEXT)
